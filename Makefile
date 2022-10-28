@@ -6,7 +6,7 @@
 #    By: vvaucoul <vvaucoul@student.42.Fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/01/27 18:18:37 by vvaucoul          #+#    #+#              #
-#    Updated: 2022/03/03 15:51:42 by vvaucoul         ###   ########.fr        #
+#    Updated: 2022/10/28 21:12:11 by vvaucoul         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -58,7 +58,7 @@ _IWHITE=$'\033[47m
 ##****************************************************************************##
 
 CC = clang
-CFLAGS = -I$(PATH_HEADER) -I$(PATH_LIBFT)/includes -Wall -Wextra -fPIC -g3 -pthread -Werror
+CFLAGS = -I$(PATH_HEADER) -I$(PATH_LIBFT)/includes -Wall -Wextra -Werror -fPIC -g3 -pthread -Werror
 LIB_FLAGS = -fPIC -shared -L./libft
 LIBFT_NAME = 42_PCC_LIBFT.a
 
@@ -93,7 +93,7 @@ SRCS = 	$(PATH_SRCS)/utils.c \
 OBJS = $(SRCS:.c=.o)
 
 %.o: %.c
-	@echo -n "\r                                                               "
+	@printf "\r                                                               "
 	@$(PRINT_COMP) $@
 	@$(CC) $(CFLAGS) -c $< -o ${<:.c=.o}
 
@@ -112,10 +112,10 @@ all: $(NAME)
 $(NAME): $(OBJS)
 	@cd libft && make && cd .. && cp libft/$(LIBFT_NAME) .
 	@$(CC) $(CFLAGS) $(LIB_FLAGS) $^ -o $(NAME)
-	@echo "$(_BOLD)$(_GREEN)$(NAME) created !$(_END)"
+	@printf "$(_BOLD)$(_GREEN)$(NAME) created !$(_END)\n"
 	@rm -f $(LIB_NAME)
 	@ln -fs $(NAME) $(LIB_NAME)
-	@echo "$(BOLD)$(_GREEN)Symbolic Link: $(LIB_NAME) created !$(_END)"
+	@printf "$(BOLD)$(_GREEN)Symbolic Link: $(LIB_NAME) created !$(_END)\n"
 
 $(PATH_OBJS)/%.o: $(PATH_SRCS)/%.c
 	@mkdir -p $(@D)
@@ -126,42 +126,42 @@ $(TEST_MALLOC): all
 	@$(CC) $(NAME) tests/$(TEST_MALLOC).c tests/lib_test.c -I$(PATH_HEADER) \
 	-I./$(PATH_LIBFT)/includes -L. $(LIB_NAME) -L. $(LIBFT_NAME) $(LIBFT_NAME) \
 	-o $(TEST_MALLOC) -fPIC -g3
-	@echo "$(_BOLD)$(_RED)Test Malloc created !$(_END)"
+	@printf "$(_BOLD)$(_RED)Test Malloc created !$(_END)\n"
 
 $(TEST_FREE): all
 	@rm -f $(TEST_FREE)
 	@$(CC) $(NAME) tests/$(TEST_FREE).c tests/lib_test.c -I$(PATH_HEADER) \
 	-I./$(PATH_LIBFT)/includes -L. $(LIB_NAME) -L $(LIBFT_NAME) $(LIBFT_NAME) \
 	-o $(TEST_FREE) -fPIC -g3
-	@echo "$(_BOLD)$(_RED)Test Free created !$(_END)"
+	@printf "$(_BOLD)$(_RED)Test Free created !$(_END)\n"
 
 $(TEST_REALLOC): all
 	@rm -f $(TEST_REALLOC)
 	@$(CC) $(NAME) tests/$(TEST_REALLOC).c tests/lib_test.c -I$(PATH_HEADER) \
 	-I./$(PATH_LIBFT)/includes -L. $(LIB_NAME) -L $(LIBFT_NAME) $(LIBFT_NAME) \
 	-o $(TEST_REALLOC) -fPIC -g3
-	@echo "$(_BOLD)$(_RED)Test Realloc created !$(_END)"
+	@printf "$(_BOLD)$(_RED)Test Realloc created !$(_END)\n"
 
 $(TEST_SPEED): all
 	@rm -f $(TEST_SPEED)
 	@$(CC) $(NAME) tests/speed_tests/malloc/speed_test_malloc.c tests/lib_test.c -I$(PATH_HEADER) \
 	-I./$(PATH_LIBFT)/includes -L. $(LIB_NAME) -L $(LIBFT_NAME) $(LIBFT_NAME) \
 	-o $(TEST_SPEED) -fPIC -g3
-	@echo "$(_BOLD)$(_RED)Test Speed created !$(_END)"
+	@printf "$(_BOLD)$(_RED)Test Speed created !$(_END)\n"
 
 $(TEST_THREAD_SAFE): all
 	@rm -f $(TEST_THREAD_SAFE)
 	@$(CC) $(NAME) tests/test_malloc_thread_safe.c tests/lib_test.c -I$(PATH_HEADER) \
 	-I./$(PATH_LIBFT)/includes -L. $(LIB_NAME) -L $(LIBFT_NAME) $(LIBFT_NAME) \
 	-o $(TEST_THREAD_SAFE) -fPIC -g3 -lpthread
-	@echo "$(_BOLD)$(_RED)Test Thread Safe created !$(_END)"
+	@printf "$(_BOLD)$(_RED)Test Thread Safe created !$(_END)\n"
 
 $(TEST_SHOW_ALLOC_MEM): all
 	@rm -f $(TEST_SHOW_ALLOC_MEM)
 	@$(CC) $(NAME) tests/test_show_alloc_mem.c tests/lib_test.c -I$(PATH_HEADER) \
 	-I./$(PATH_LIBFT)/includes -L. $(LIB_NAME) -L $(LIBFT_NAME) $(LIBFT_NAME) \
 	-o $(TEST_SHOW_ALLOC_MEM) -fPIC -g3
-	@echo "$(_BOLD)$(_RED)Test Show Alloc Mem created !$(_END)"
+	@printf "$(_BOLD)$(_RED)Test Show Alloc Mem created !$(_END)\n"
 
 test_all: $(TEST_MALLOC) $(TEST_FREE) $(TEST_REALLOC) $(TEST_SPEED) $(TEST_THREAD_SAFE) $(TEST_SHOW_ALLOC_MEM)
 
@@ -170,12 +170,12 @@ clean:
 	@rm -rf $(OBJS)
 	@rm -rf $(PATH_OBJS)
 	@rm -f $(TEST_MALLOC) $(TEST_FREE) $(TEST_REALLOC) $(TEST_SPEED) $(TEST_THREAD_SAFE) $(TEST_SHOW_ALLOC_MEM)
-	@echo "$(_BOLD)$(_YELLOW)libft_malloc cleaned...$(_END)"
+	@printf "$(_BOLD)$(_YELLOW)libft_malloc cleaned...$(_END)\n"
 
 fclean: clean
 	@cd libft && make fclean
 	@rm -f $(NAME) $(LIB_NAME)
-	@echo "$(_BOLD)$(_YELLOW)$(NAME) deleted...$(_END)"
+	@printf "$(_BOLD)$(_YELLOW)$(NAME) deleted...$(_END)\n"
 
 re: fclean lib all
 
@@ -183,7 +183,7 @@ tests: all $(TEST_MALLOC) $(TEST_FREE) $(TEST_REALLOC)
 
 lib: all
 	@sh export_env.sh
-	@echo "$(_BOLD)$(_PURPLE)export library...$(_END)"
+	@printf "$(_BOLD)$(_PURPLE)export library...$(_END)\n"
 
 .PHONY: all clean fclean re tests lib test_all $(TEST_MALLOC) $(TEST_FREE) $(TEST_REALLOC) $(TEST_SPEED) $(TEST_THREAD_SAFE) $(TEST_SHOW_ALLOC_MEM)
 
