@@ -1,7 +1,5 @@
 # Malloc
 
-### Projet
-
 The objective of the project is to faithfully recreate the malloc system of the library standard C.
 This repository, contains the complete project code and many tests.
 The project’s difficulty comes from using the 'MMAP' function and creating three stacks.
