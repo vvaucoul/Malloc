@@ -1,20 +1,42 @@
 # Malloc
 
-- ![alt text](https://img.shields.io/badge/Note-105%2F100-lightgreen)
-- ![alt text](https://img.shields.io/badge/Dur%C3%A9e%20du%20projet-4%20semaine-orange)
-- ![alt text](https://img.shields.io/badge/XP-9450-red)
-
 ### Projet
 
-L'objectif du projet est de recréer fidèlement le malloc système de la lib C.
-Le répo, contient le code complet du projet ainsi que de nombreux test avant de corriger votre malloc !
-La difficulté du projet vient de l'utilisation de la fonction 'MMAP' et de la création de trois piles.
+The objective of the project is to faithfully recreate the malloc system of the library standard C.
+This repository, contains the complete project code and many tests.
+The project’s difficulty comes from using the 'MMAP' function and creating three stacks.
 
-Liste des bonus réalisés:
+Bonuses done
 
-- Un Hexdump de la mémoire (show_alloc_mem_ex)
-- L'utilisation des fonctions en thread safe
-- Défragmenter la mémoire libérer
+- Memory Hexdump. (show_alloc_mem_ex)
+- Thread Safe functions.
+- Memory défragmentation.
+
+## Usage
+
+- Clone Repository
+```bash
+git clone https://github.com/vvaucoul/Malloc && cd Malloc
+```
+
+- Compilation
+```bash
+make
+```
+
+- Tests Compilation
+```bash
+make tests
+```
+
+> Replace Malloc system (pay attention to this one)
+```bash
+#!/bin/sh
+export LD_LIBRARY_PATH=$PWD
+export LD_INSERT_LIBRARIES="libft_malloc.so"
+export LD_FORCE_FLAT_NAMESPACE=1
+$@
+```
 
 # Ressources
 
