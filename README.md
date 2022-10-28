@@ -38,7 +38,17 @@ export LD_FORCE_FLAT_NAMESPACE=1
 $@
 ```
 
-# Ressources
+## Functions
+
+```C
+void *malloc(size_t size);
+void *realloc(void *ptr, size_t size);
+void free(void *ptr);
+void show_alloc_mem(void);
+void show_alloc_mem_ex(void);
+```
+
+## Ressources
 
 - [GetPageSize](https://man7.org/linux/man-pages/man2/getpagesize.2.html)
 - [MMAP](https://man7.org/linux/man-pages/man2/mmap.2.html)
